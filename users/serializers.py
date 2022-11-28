@@ -6,17 +6,15 @@ from djoser.serializers import UserCreateSerializer as BaseUserRegistrationSeria
 
 from .models import User
 
-
-
 class UserSerializer(serializers.ModelSerializer):
-
+    # tree = TreesSerializer()
     class Meta:
         model = User
         fields = [
             'id',
             'first_name',
             'email',
-            'password',
+
         ]
 
 

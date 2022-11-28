@@ -14,7 +14,7 @@ class TypeSerializer(serializers.ModelSerializer):
         )
 
 
-class TreesSerializer(serializers.ModelSerializer):
+class TreeSerializer(serializers.ModelSerializer):
     type = TypeSerializer()
     user = UserSerializer()
 
