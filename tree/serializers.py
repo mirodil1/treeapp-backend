@@ -29,6 +29,7 @@ class TreeSerializer(serializers.ModelSerializer):
             "definition",
             "latitude",
             "longitude",
+            'created_at',
             "is_verified",
         )
 
