@@ -32,3 +32,24 @@ class TreeSerializer(serializers.ModelSerializer):
             "is_verified",
         )
 
+
+class TreeCreateSerializer(serializers.ModelSerializer):
+    type = TypeSerializer(read_only=True)
+    type_id = serializers.PrimaryKeyRelatedField(queryset=Type.objects.all(), source="type", write_only=True)
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+
+    class Meta:
+        model = Trees
+        fields = (
+            "id",
+            "user",
+            "name",
+            "type",
+            "type_id",
+            "definition",
+            "latitude",
+            "longitude",
+            "is_verified",
+        )
