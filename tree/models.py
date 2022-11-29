@@ -27,8 +27,8 @@ class Trees(TimeStampModel):
     name = models.CharField(max_length=255, verbose_name="Nomi")
     image = models.ImageField(upload_to="media/images", blank=True)
     definition = models.TextField(blank=True, null=True, verbose_name="Ta'rif")
-    latitude = models.DecimalField(max_digits=10, decimal_places=6, verbose_name="Kordinata")
-    longitude = models.DecimalField(max_digits=10, decimal_places=6, verbose_name="Kordinata")
+    latitude = models.DecimalField(max_digits=20, decimal_places=15, verbose_name="Kordinata")
+    longitude = models.DecimalField(max_digits=20, decimal_places=15, verbose_name="Kordinata")
     is_verified = models.BooleanField(default=False, verbose_name="HOLATI")
 
     class Meta:
