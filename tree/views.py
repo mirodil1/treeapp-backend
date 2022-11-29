@@ -3,10 +3,11 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework import status
+from rest_framework.decorators import permission_classes
 
 from .models import Trees
-from .serializers import TreeSerializer
+from .serializers import TreeSerializer, TreeCreateSerializer
 # Create your views here.
 
 
@@ -15,6 +16,14 @@ class TreeListApiView(APIView):
         trees = Trees.objects.all()
         serializer = TreeSerializer(trees, many=True)
         return Response(serializer.data)
+
+    @permission_classes([IsAuthenticated])
+    def post(self, request, format=None):
+        serializer = TreeCreateSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TreeDetailApiView(APIView):
