@@ -6,9 +6,16 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.decorators import permission_classes
 
-from .models import Trees
-from .serializers import TreeSerializer, TreeCreateSerializer
+from .models import Trees, Type
+from .serializers import TypeSerializer, TreeSerializer, TreeCreateSerializer
 # Create your views here.
+
+
+class TreeTypeList(APIView):
+    def get(self, format=None):
+        types = Type.objects.all()
+        serializer = TypeSerializer(types, many=True)
+        return Response(serializer.data)
 
 
 class TreeListApiView(APIView):
@@ -18,7 +25,7 @@ class TreeListApiView(APIView):
         return Response(serializer.data)
 
     @permission_classes([IsAuthenticated])
-    def post(self, request, format=None):
+    def post(self, request):
         serializer = TreeCreateSerializer(data=request.data, context={'request': request})
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
