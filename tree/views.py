@@ -44,7 +44,7 @@ class UsersTree(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        trees = Trees.objects.filter(user=request.user)
+        trees = Trees.objects.filter(user=request.user).order_by('-created_at')
         serializer = TreeSerializer(trees, many=True)
         print(serializer.data)
         return Response(serializer.data)
