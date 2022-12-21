@@ -26,6 +26,7 @@ class TreeSerializer(serializers.ModelSerializer):
             "name",
             "type",
             "get_image",
+            "get_qrcode",
             "definition",
             "latitude",
             "longitude",
