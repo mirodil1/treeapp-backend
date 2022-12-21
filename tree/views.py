@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -35,9 +35,9 @@ class TreeListApiView(APIView):
 
 class TreeDetailApiView(APIView):
     def get(self, request, id):
-        tree = Trees.objects.get(id=id)
+        tree = get_object_or_404(Trees, id=id)
         serializer = TreeSerializer(tree)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class UsersTree(APIView):
@@ -46,5 +46,4 @@ class UsersTree(APIView):
     def get(self, request):
         trees = Trees.objects.filter(user=request.user).order_by('-created_at')
         serializer = TreeSerializer(trees, many=True)
-        print(serializer.data)
         return Response(serializer.data)
