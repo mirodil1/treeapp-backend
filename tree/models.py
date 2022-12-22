@@ -33,8 +33,8 @@ class Trees(TimeStampModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user", on_delete=models.CASCADE)
     type = models.ForeignKey(Type, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, verbose_name="Nomi")
-    image = models.ImageField(upload_to="images", default="images/tree30.11.22.11:00.jpg", blank=True)
-    qr_code = models.ImageField(upload_to="qr-code")
+    image = models.ImageField(upload_to="images", default="https://cdn.pixabay.com/photo/2014/12/22/00/07/tree-576847__480.png", blank=True)
+    qr_code = models.ImageField(upload_to="qr-code", default='https://cdn.pixabay.com/photo/2014/12/22/00/07/tree-576847__480.png')
     definition = models.TextField(blank=True, null=True, verbose_name="Ta'rif")
     latitude = models.DecimalField(max_digits=20, decimal_places=15, verbose_name="Kordinata")
     longitude = models.DecimalField(max_digits=20, decimal_places=15, verbose_name="Kordinata")
@@ -55,7 +55,7 @@ class Trees(TimeStampModel):
                 border=3
             )
             
-            qr.add_data(env('CORS_ALLOWED_ORIGINS')+f"/tree/{self.id}")
+            qr.add_data(env('BASE_CLIENT_URL')+f"/tree/{self.id}")
             qr.make()
             qrcode_img = qr.make_image(fill_color="black", back_color="white")
             canvas = Image.new('RGB', (390, 390), 'white')
