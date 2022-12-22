@@ -45,7 +45,6 @@ class TreeCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Trees
         fields = (
-            "id",
             "user",
             "name",
             "type",

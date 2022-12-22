@@ -34,7 +34,7 @@ class Trees(TimeStampModel):
     type = models.ForeignKey(Type, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, verbose_name="Nomi")
     image = models.ImageField(upload_to="images", default="https://cdn.pixabay.com/photo/2014/12/22/00/07/tree-576847__480.png", blank=True)
-    qr_code = models.ImageField(upload_to="qr-code", default='https://cdn.pixabay.com/photo/2014/12/22/00/07/tree-576847__480.png', blank=True)
+    qr_code = models.ImageField(upload_to="qr-code", blank=True)
     definition = models.TextField(blank=True, null=True, verbose_name="Ta'rif")
     latitude = models.DecimalField(max_digits=20, decimal_places=15, verbose_name="Kordinata")
     longitude = models.DecimalField(max_digits=20, decimal_places=15, verbose_name="Kordinata")
@@ -66,7 +66,7 @@ class Trees(TimeStampModel):
             canvas.save(buffer, 'PNG')
             self.qr_code.save(file_name, File(buffer), save=False)
             canvas.close()
-            super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
 
     def get_image(self):
